@@ -14,6 +14,17 @@ Algunas de las ideas de análisis e implementación que exploramos incluyen el a
 
 En resumen, este proyecto nos permitió entender mejor la situación actual del mercado laboral en el área de manejo y análisis de datos, y ofrecer recomendaciones y soluciones a la empresa de Recruiters IT para tomar decisiones informadas y acordes con los cambios que existen a nivel mundial.
 
+Además, el equipo presentó un informe detallado de los hallazgos y conclusiones del proyecto, incluyendo visualizaciones y gráficos relevantes para ilustrar los datos y patrones encontrados.
+
+En cuanto a las habilidades y tecnologías más demandadas, observamos una tendencia en el mercado hacia el uso de herramientas de Big Data, Ciencia de Datos, Inteligencia de Negocio, Machine Learning e Inteligencia Artificial. También encontramos que la demanda de Científicos de Datos y Desarrolladores Big Data está creciendo a una tasa anual del 45%.
+
+En cuanto a la relación entre habilidades/herramientas y salarios, identificamos que ciertas habilidades como el manejo de bases de datos y la programación en lenguajes específicos están asociadas con un mayor salario. Además, descubrimos que la remuneración varía según el país de origen y la ubicación del trabajo.
+
+Finalmente, en cuanto a la identificación del tipo de profesional más adecuado para cumplir con ciertas funciones y conocimientos tecnológicos, concluimos que un Data Scientist es la posición más adecuada para cumplir con las funciones relacionadas con el manejo y análisis de datos.
+
+En conclusión, este proyecto permitió al equipo de Recruiters IT tomar decisiones informadas y estratégicas para abordar las necesidades y demandas del mercado laboral en el área de manejo y análisis de datos, y prepararse para el futuro de la tecnología y la transformación digital.
+
+
 Descripción del Problema:
 El rápido crecimiento de la tecnología ha permitido a las empresas manejar grandes cantidades de información y datos. El término "Big Data" ha ganado relevancia en los últimos años, y la capacidad de las empresas para almacenar y procesar datos es cada vez más importante para cumplir sus objetivos. Sin embargo, según la Encuesta de Transformación Digital de ANDI en 2019, sólo el 5% de los datos de las empresas son aprovechados, lo que indica la necesidad de acelerar la Transformación Digital y usar herramientas como el Big Data, Ciencia de Datos, Inteligencia de Negocio, Machine Learning e Inteligencia Artificial.
 
