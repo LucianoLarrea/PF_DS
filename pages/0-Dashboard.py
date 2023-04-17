@@ -4,7 +4,8 @@ import datetime
 import plotly.graph_objs as go
 import plotly.express as px
 
-df = pd.read_csv('Proyecto_grupal_DS/luciano/df.csv',index_col=13)
+# df = pd.read_csv('Proyecto_grupal_DS/luciano/df.csv',index_col=13)
+df = pd.read_csv('df.csv',index_col=13)
 # Convertir el índice del dataframe en datetime
 df.index = pd.to_datetime(df.index)
 df = df[df['license_class']=='Yellow']
