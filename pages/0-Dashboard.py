@@ -8,7 +8,7 @@ import plotly.express as px
 df = pd.read_csv('df.csv',index_col=13)
 # Convertir el índice del dataframe en datetime
 df.index = pd.to_datetime(df.index)
-df = df[df['license_class']=='Yellow']
+# df = df[df['license_class']=='Yellow']
 
 # Dashboard layout
 # def dashboard_ui():
@@ -18,7 +18,7 @@ monthdate = st.sidebar.date_input("Month Date", datetime.date(2023, 1, 1))
 # Obtener la fecha seleccionada en el date_input
 selected_date = pd.to_datetime(monthdate)
 # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
-unique_vehicles_value = df.loc[selected_date, 'unique_vehicles']
+unique_vehicles_value = df[df['license_class']=='Yellow'].loc[selected_date, 'unique_vehicles']
 market_share = fleet / (fleet + unique_vehicles_value)
 market_share_percentage = market_share * 100
 # Sidebar menu
@@ -31,7 +31,23 @@ df['color'] = df['license_class'].map(colors)
 # Dashboard page
 if menu_selection == menu_items[0]:
     
-    fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='unique_vehicles', color='color')
+    # st.write(f"El valor de unique_vehicles para la fecha seleccionada ({selected_date}) es {unique_vehicles_value}")
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric('Market Vehicles',unique_vehicles_value)
+    with col2:
+        st.metric('Taxi Market Share', f'{market_share_percentage:.2f}%')
+    with col3:
+        st.metric('Fleet Vehicles', fleet)
+    with col4:
+        ev_market_share = 100* fleet / (fleet + unique_vehicles_value/100)
+        st.metric('EV Taxi Market Share', f'{ev_market_share:.2f}%')
+    
+    fig = go.Figure()
+    # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='unique_vehicles', color='color')
+    if  st.checkbox('Show Vehicles FHVHV',value=False):
+        fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['unique_vehicles'], mode='lines', name='FHV - High Volume'))
+    fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['unique_vehicles'], mode='lines', name='Yellow'))
     fig.update_layout(
     title='Unique Vehicles',
     xaxis=dict(title='Month & Year', showgrid=False),
@@ -39,23 +55,25 @@ if menu_selection == menu_items[0]:
     st.plotly_chart(fig, use_container_width=True)
     
     # df = df[df['license_class']=='Yellow']
-    # Mostrar el valor en la interfaz de Streamlit
-    st.write(f"El valor de unique_vehicles para la fecha seleccionada ({selected_date}) es {unique_vehicles_value}")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric('Market Vehicles',unique_vehicles_value)
-    with col2:
-        st.metric('Market Share', f'{market_share_percentage:.2f}%')
-    with col3:
-        st.metric('Fleet Vehicles', fleet)
-    fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='unique_drivers', color='color')
+    unique_drivers_value = df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers']
+    st.metric('Market Drivers',unique_drivers_value)
+    fig = go.Figure()
+    if  st.checkbox('Show Drivers FHVHV',value=False):
+        fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['unique_drivers'], mode='lines', name='FHV - High Volume'))
+    fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['unique_drivers'], mode='lines', name='Yellow'))
+    # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='unique_drivers', color='color')
     fig.update_layout(
     title='Unique Drivers',
     xaxis=dict(title='Month & Year', showgrid=False),
     yaxis=dict(title='Unique Drivers'))
     st.plotly_chart(fig, use_container_width=True)
     
-    fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='drivers_vehicles_ratio', color='color')
+    st.metric('Market Drivers/Vehicles',round(unique_drivers_value/unique_vehicles_value,1))
+    fig = go.Figure()
+    if  st.checkbox('Show Drivers/Vehicles FHVHV',value=False):
+        fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['drivers_vehicles_ratio'], mode='lines', name='FHV - High Volume'))
+    fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['drivers_vehicles_ratio'], mode='lines', name='Yellow'))
+    # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='drivers_vehicles_ratio', color='color')
     fig.update_layout(
     title='Drivers / Vehicles Ratio',
     xaxis=dict(title='Month & Year', showgrid=False),
@@ -65,13 +83,28 @@ if menu_selection == menu_items[0]:
 if menu_selection == menu_items[1]:
     # st.header("Dashboard")
     # st.sidebar.subheader("Choose a Date Range")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
+        trips_day_value = df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day']
+        st.metric('Market Trips per day USD',trips_day_value)
+    with col2:
+        st.metric('Market Share', f'{market_share_percentage:.2f}%')
+    with col3:
+        shared_trips = int(trips_day_value * market_share)
+        st.metric('Fleet Trips per day USD',shared_trips)
 
     # colors = {'Yellow': 'Yellow', 'Green': 'Green', 'FHV - High Volume': 'FHVHV','FHV - Black Car':'Black','FHV - Lux Limo':'Lux Limo','FHV - Livery':'Livery'}
 
     # # Create a new column with the corresponding color for each license class
     # df['color'] = df['license_class'].map(colors)
     # Create two line charts with different license classes
-    fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='trips_per_day', color='color')
+    fig = go.Figure()
+    if  st.checkbox('Show Trips/Day FHVHV',value=False):
+        fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['trips_per_day'], mode='lines', name='FHV - High Volume'))
+    fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['trips_per_day'], mode='lines', name='Yellow'))
+    # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='trips_per_day', color='color')
     # fig2 = px.line(df[df['license_class']=='Green'], x='month_date', y='trips_per_day',color='color')
     # fig3 = px.line(df[df['license_class']=='FHV - High Volume'], x='month_date', y='trips_per_day', color='color')
     # fig4 = px.line(df[df['license_class']=='FHV - Black Car'], x='month_date', y='trips_per_day', color='color')
@@ -84,16 +117,7 @@ if menu_selection == menu_items[1]:
     yaxis=dict(title='Trips Per Day'))
 
     st.plotly_chart(fig, use_container_width=True)  #
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
-        trips_day_value = df.loc[selected_date, 'trips_per_day']
-        st.metric('Market Trips per day USD',trips_day_value)
-    with col2:
-        st.metric('Market Share', f'{market_share_percentage:.2f}%')
-    with col3:
-        shared_trips = int(trips_day_value * market_share)
-        st.metric('Fleet Trips per day USD',shared_trips)
+
     # st.plotly_chart(df['trips_per_day'], use_container_width=True)
     # st.plotly_chart(df['trips_year'], use_container_width=True)
     
@@ -117,6 +141,17 @@ if menu_selection == menu_items[1]:
    # st.plotly
 
 if menu_selection == menu_items[2]:
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
+        farebox_day_value = df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day']
+        st.metric('Market Farebox per day USD',farebox_day_value)
+    with col2:
+        st.metric('Market Share', f'{market_share_percentage:.2f}%')
+    with col3:
+        shared_farebox = int(farebox_day_value * market_share)
+        st.metric('Fleet Farebox per day USD',shared_farebox)
     # colors = {'Yellow': 'Yellow', 'Green': 'Green', 'FHV - High Volume': 'FHVHV','FHV - Black Car':'Black','FHV - Lux Limo':'Lux Limo','FHV - Livery':'Livery'}
     # df['color'] = df['license_class'].map(colors)
     fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='farebox_per_day', color='color')
@@ -127,20 +162,21 @@ if menu_selection == menu_items[2]:
     xaxis=dict(title='Month & Year', showgrid=False),
     yaxis=dict(title='Farebox Per Day'))
     st.plotly_chart(fig, use_container_width=True)
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
-        farebox_day_value = df.loc[selected_date, 'farebox_per_day']
-        st.metric('Market Farebox per day USD',farebox_day_value)
-    with col2:
-        st.metric('Market Share', f'{market_share_percentage:.2f}%')
-    with col3:
-        shared_farebox = int(farebox_day_value * market_share)
-        st.metric('Fleet Farebox per day USD',shared_farebox)
+
 
     
 if menu_selection == menu_items[3]:
     
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        farebox_month_value = df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road']
+        st.metric('Farebox per month per vehicle USD',int(farebox_month_value))
+    with col2:
+        farebox_trip_value = df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road']
+        st.metric('Farebox per trip',round(farebox_trip_value,1))
+    with col3:
+        trips_vehicle_value = df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road']
+        st.metric('Trips per vehicle',int(trips_vehicle_value))
 
     fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='monthly_farebox_per_vehicle_on_road', color='color')
     fig.update_layout(
