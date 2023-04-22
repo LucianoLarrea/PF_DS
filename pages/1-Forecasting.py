@@ -8,7 +8,7 @@ import plotly.express as px
 df = pd.read_csv('df.csv',index_col=13)
 df.index = pd.to_datetime(df.index)
 # df = df[df['license_class']=='Yellow']
-Ptrips = pd.read_csv('Proyecto_grupal_DS/luciano/ML/proy_Y_trips.csv')
+# Ptrips = pd.read_csv('Proyecto_grupal_DS/luciano/ML/proy_Y_trips.csv')
 proy_Y = pd.read_csv('Proyecto_grupal_DS/luciano/ML/proy_Y.csv',index_col=0)
 proy_Y.index = pd.to_datetime(proy_Y.index)
 # Dashboard layout
@@ -93,29 +93,38 @@ if menu_selection == menu_items[0]:
 #     selected_date_pos = proy_Y.index.get_loc(selected_date)
 
 #     st.plotly_chart(fig, use_container_width=True) 
-   
     # Crear una figura de Plotly
     fig = go.Figure()
     if  st.checkbox('Show FHVHV',value=False):
         fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['unique_vehicles'], mode='lines', name='FHV - High Volume'))
     # Agregar la línea del conjunto de datos `proy_Y`
     fig.add_trace(go.Scatter(x=proy_Y.index, y=proy_Y['unique_vehicles'], mode='lines', name='proy_Y'))
+    fig.add_trace(go.Scatter(x=proy_Y.index, y=proy_Y['unique_vehicles_PC'], mode='lines', name='proy_Y_PC'))
     # Agregar la línea del conjunto de datos `df`
     fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['unique_vehicles'], mode='lines', name='Yellow'))
     # Agregar la línea vertical en la posición `selected_date_pos`
     fig.add_shape(type='line',
-                x0=proy_Y.index[selected_date_pos],
+                x0=proy_Y.index[171],
                 y0=0,
-                x1=proy_Y.index[selected_date_pos],
-                y1=max(proy_Y['unique_vehicles']),
+                x1=proy_Y.index[171],
+                y1=max(df[df['license_class']=='Yellow']['unique_vehicles']),
                 line=dict(color='red', width=2, dash='dash'))
     fig.add_shape(
                 type='line',
                 x0=proy_Y.index[0],
-                y0=proy_Y.loc[proy_Y.index[selected_date_pos], 'unique_vehicles'],
+                y0=proy_Y.loc[proy_Y.index[171], 'unique_vehicles'],
                 x1=proy_Y.index[-1],
-                y1=proy_Y.loc[proy_Y.index[selected_date_pos], 'unique_vehicles'],
+                y1=proy_Y.loc[proy_Y.index[171], 'unique_vehicles'],
                 line=dict(color='red', width=2, dash='dash'))
+    x_value = proy_Y.index[171].strftime('%y-%m')
+    fig.add_annotation(x=proy_Y.index[171], y=max(df[df['license_class']=='Yellow']['unique_vehicles']),
+                   text="x value: {}".format(x_value),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=proy_Y.index[0], y=proy_Y.loc[proy_Y.index[171], 'unique_vehicles'],
+                   text="y value: {}".format(int(proy_Y.loc[proy_Y.index[171], 'unique_vehicles'])),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
+
+    
     # Configurar el diseño del gráfico
     fig.update_layout(title='Yellow Taxi: Average Vehicles per Day each Month',
                     xaxis=dict(title='Month & Year', showgrid=True),
@@ -170,6 +179,15 @@ if menu_selection == menu_items[1]:
                 x1=proy_Y.index[-1],
                 y1=proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'],
                 line=dict(color='red', width=2, dash='dash'))
+    
+    x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
+    fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['trips_per_day']),
+                   text="x value: {}".format(x_value),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=proy_Y.index[0], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'],
+                   text="y value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'])),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
+    
     fig.update_layout(title='Yellow Taxi: Total Trips per Day each Month',
                     xaxis=dict(title='Month & Year', showgrid=True),
                     yaxis=dict(title='Trips Per Day'))
@@ -203,19 +221,29 @@ if menu_selection == menu_items[2]:
 
     fig.add_trace(go.Scatter(x=proy_Y.index, y=proy_Y['farebox_per_day'], mode='lines', name='proy_Y'))
     fig.add_trace(go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['farebox_per_day'], mode='lines', name='Yellow'))
+    fig.add_trace(go.Scatter(x=proy_Y.index, y=proy_Y['farebox_per_day_PC'], mode='lines', name='proy_Y_PC'))
     fig.add_shape(type='line',
-                x0=proy_Y.index[selected_date_pos],
+                x0=proy_Y.index[165],
                 y0=0,
-                x1=proy_Y.index[selected_date_pos],
+                x1=proy_Y.index[165],
                 y1=max(proy_Y['farebox_per_day']),
                 line=dict(color='red', width=2, dash='dash'))
     fig.add_shape(
                 type='line',
                 x0=proy_Y.index[0],
-                y0=proy_Y.loc[proy_Y.index[selected_date_pos], 'farebox_per_day'],
+                y0=proy_Y.loc[proy_Y.index[165], 'farebox_per_day'],
                 x1=proy_Y.index[-1],
-                y1=proy_Y.loc[proy_Y.index[selected_date_pos], 'farebox_per_day'],
+                y1=proy_Y.loc[proy_Y.index[165], 'farebox_per_day'],
                 line=dict(color='red', width=2, dash='dash'))
+    
+    x_value = proy_Y.index[165].strftime('%y-%m')
+    fig.add_annotation(x=proy_Y.index[165], y=max(df[df['license_class']=='Yellow']['farebox_per_day']),
+                   text="x value: {}".format(x_value),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=proy_Y.index[0], y=proy_Y.loc[proy_Y.index[165], 'farebox_per_day'],
+                   text="y value: {}".format(int(proy_Y.loc[proy_Y.index[165], 'farebox_per_day'])),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
+    
     fig.update_layout(title='Yellow Taxi: Total Farebox per Day each Month',
                     xaxis=dict(title='Month & Year', showgrid=True),
                     yaxis=dict(title='Farebox Per Day'))
@@ -264,6 +292,15 @@ if menu_selection == menu_items[3]:
                 x1=proy_Y.index[-1],
                 y1=proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle'],
                 line=dict(color='red', width=2, dash='dash'))
+    
+    x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
+    fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['avg_hours_per_day_per_vehicle']),
+                   text="x value: {}".format(x_value),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=proy_Y.index[0], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle'],
+                   text="y value: {}".format(proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle']),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
+    
     fig.update_layout(title='Yellow Taxi: Average Hours per Day each Vehicle',
                     xaxis=dict(title='Month & Year', showgrid=True),
                     yaxis=dict(title='Hours Per Day'))
@@ -333,28 +370,13 @@ if menu_selection == menu_items[4]:
                 y1=proy_Y.loc[proy_Y.index[selected_date_pos], 'monthly_trips_per_vehicle_on_road'],
                 line=dict(color='red', width=2, dash='dash'))
 
-    
-    # # Actualizar los datos del gráfico con los valores filtrados
-    # fig.data[0].x = proy_Y.index
-    # fig.data[0].y = proy_Y['monthly_trips_per_vehicle_on_road']
-
-    # fig.data[1].x = df.index
-    # fig.data[1].y = df['monthly_trips_per_vehicle_on_road']
-
-    # # Actualizar las líneas verticales en el gráfico con las fechas seleccionadas
-    # fig.update_shapes({
-    #     'x0': start_selected,
-    #     'x1': start_selected
-    # }, selector=dict(name='Vertical Line 1'))
-
-    # fig.update_shapes({
-    #     'x0': end_selected,
-    #     'x1': end_selected
-    # }, selector=dict(name='Vertical Line 2'))
-
-    # # Actualizar la etiqueta del eje x con el rango de fechas seleccionado
-    # fig.update_layout(xaxis=dict(title=f'Month & Year ({start_selected} to {end_selected})', showgrid=True))    
-    
+    x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
+    fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['monthly_trips_per_vehicle_on_road']),
+                text="x value: {}".format(x_value),
+                showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=proy_Y.index[0], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'monthly_trips_per_vehicle_on_road'],
+                text="y value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'monthly_trips_per_vehicle_on_road'])),
+                showarrow=True, arrowhead=1, ax=50, ay=50)
     fig.update_layout(title='Yellow Taxi: Total Trips per Vehicle each Month',
                     xaxis=dict(title='Month & Year', showgrid=True),
                     yaxis=dict(title='Trips per Vehicle'))

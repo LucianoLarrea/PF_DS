@@ -3,6 +3,7 @@ import streamlit as st
 import datetime
 import plotly.graph_objs as go
 import plotly.express as px
+import app.connection.get_data as get_data
 
 # df = pd.read_csv('Proyecto_grupal_DS/luciano/df.csv',index_col=13)
 df = pd.read_csv('df.csv',index_col=13)

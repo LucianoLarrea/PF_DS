@@ -3,6 +3,10 @@ import streamlit as st
 from PIL import Image
 import plotly.graph_objs as go
 import plotly.express as px
+from app.connection.get_data import get_data
+
+query2 = 'SELECT * FROM [monthly_report]'
+df = get_data(query2)
 
 options = ['Inicio','Objetivos','Mercado','Regulación','Hitos']
 query = st.sidebar.radio('Sección',options)
@@ -33,6 +37,7 @@ if query == options[2]:
     menu_selection = st.sidebar.radio("Secciones", menu_items)
     if menu_selection == menu_items[0]:
         st.write('Nueva York')
+        st.write(df)
     if menu_selection == menu_items[1]:
         st.write('Transporte')
     if menu_selection == menu_items[2]:
