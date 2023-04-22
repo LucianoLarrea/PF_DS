@@ -8,8 +8,8 @@ import plotly.express as px
 df = pd.read_csv('df.csv',index_col=13)
 df.index = pd.to_datetime(df.index)
 # df = df[df['license_class']=='Yellow']
-# Ptrips = pd.read_csv('Proyecto_grupal_DS/luciano/ML/proy_Y_trips.csv')
-proy_Y = pd.read_csv('Proyecto_grupal_DS/luciano/ML/proy_Y.csv',index_col=0)
+# proy_Y = pd.read_csv('Proyecto_grupal_DS/luciano/ML/proy_Y.csv',index_col=0)
+proy_Y = pd.read_csv('proy_Y.csv',index_col=0)
 proy_Y.index = pd.to_datetime(proy_Y.index)
 # Dashboard layout
 st.set_page_config(page_title="Dashboard", page_icon=":car:", layout="wide")
