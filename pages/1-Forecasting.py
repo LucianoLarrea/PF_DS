@@ -141,12 +141,12 @@ if menu_selection == menu_items[1]:
     with col1:
         # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
         trips_day_value = proy_Y.loc[selected_date, 'trips_per_day']
-        st.metric('Market Trips per day USD',trips_day_value)
+        st.metric('Market Trips per day',trips_day_value)
     with col2:
         st.metric('Market Share', f'{market_share_percentage:.2f}%')
     with col3:
         shared_trips = int(trips_day_value * market_share)
-        st.metric('Fleet Trips per day USD',shared_trips)
+        st.metric('Fleet Trips per day',shared_trips)
 
         
     # fig = px.line(proy_Y['trips_per_day'], x=proy_Y.index, y='trips_per_day')
