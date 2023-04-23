@@ -8,13 +8,13 @@ from app.connection.get_data import get_data
 query2 = 'SELECT * FROM [monthly_report]'
 df = get_data(query2)
 
-options = ['Inicio','Objetivos','Mercado','Regulación','Hitos']
+options = ['Home','Goals','Market','Regulation','Milestones']
 query = st.sidebar.radio('Sección',options)
 
 if query == options[0]:
     image = Image.open('pages/DGRL.png')
     st.image(image, caption='Transforming data into knowledge')
-    st.write('Equipo de trabajo')
+    st.write('Team')
 
     st.write('Franco Myburg DATA ENGINEER')
     st.write('Ivanna Villa DATA ANALYST')
@@ -23,25 +23,32 @@ if query == options[0]:
     st.write('Roy Quilca DATA ENGINEER')
 
 if query == options[1]:
-    st.subheader('Objetivos')
-    st.write('Este trabajo se propone responder las siguientes preguntas:')
-    st.write('¿Cuáles son las dimensiones del mercado?			Cuota del mercado')
-    st.write('¿Cuáles son las perspectivas del mercado?			Tendencias')
-    st.write('¿Cuáles son las zonas con mayor demanda?		Métricas')
-    st.write('¿Cuáles son los ingresos proyectados?				KPIs')
-    st.write('¿Cuál es el impacto ambiental positivo proyectado?		Calculadora')
+    st.subheader('Goals')
+    st.write('This work aims to answer the following questions:')
+    st.write('¿What are the dimensions of the market?	=>  Market Share')
+    st.write('¿What are the market prospects?	=>	Trends')
+    st.write('¿What are the areas with the highest demand?	=>	Metrics')
+    st.write('¿What are the projected revenues?		=>	KPIs')
+    st.write('¿What is the projected positive environmental impact?	=>	Calculator')
 
 if query == options[2]:
-    st.subheader('Mercado')
-    menu_items = ["Nueva York", "Transporte", "Mercado"]
-    menu_selection = st.sidebar.radio("Secciones", menu_items)
+    st.subheader('Market')
+    menu_items = ["New York", "Transport", "Market"]
+    menu_selection = st.sidebar.radio("Sections", menu_items)
     if menu_selection == menu_items[0]:
-        st.write('Nueva York')
-        st.write(df)
+        col1, col2 = st.columns([1, 3])
+        with col1:
+            st.write('New York City')
+            image = Image.open('pages/NYC.png')
+            st.image(image, caption='Boroughs')
+        with col2:
+            st.write('Boroughs')
+            image = Image.open('pages/NYCTable.png')
+            st.image(image, caption='Data')
     if menu_selection == menu_items[1]:
-        st.write('Transporte')
+        st.write('Transport')
     if menu_selection == menu_items[2]:
-        st.write('Mercado')
+        st.write('Market')
         
 if query == options[3]:
     st.subheader('Regulacion')

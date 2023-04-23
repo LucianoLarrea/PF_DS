@@ -192,6 +192,8 @@ if menu_selection == menu_items[1]:
                     xaxis=dict(title='Month & Year', showgrid=True),
                     yaxis=dict(title='Trips Per Day'))
     st.plotly_chart(fig, use_container_width=True)
+    
+    st.write('Monthly Taxi trip counts steadily decreased from 2013 to 2023, partially due to the expansion of High-Volume For-Hire Services (HVFHS)')
         
 if menu_selection == menu_items[2]:
     col1, col2, col3 = st.columns(3)
@@ -298,7 +300,7 @@ if menu_selection == menu_items[3]:
                    text="x value: {}".format(x_value),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=proy_Y.index[0], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle'],
-                   text="y value: {}".format(proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle']),
+                   text="y value: {}".format(round(proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle'],1)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     fig.update_layout(title='Yellow Taxi: Average Hours per Day each Vehicle',
