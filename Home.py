@@ -8,7 +8,7 @@ from app.connection.get_data import get_data
 query2 = 'SELECT * FROM [monthly_report]'
 df = get_data(query2)
 
-options = ['Home','Goals','Market','Milestones']
+options = ['Home','Goals','Market']
 query = st.sidebar.radio('Sección',options)
 
 if query == options[0]:
@@ -53,35 +53,42 @@ if query == options[2]:
 # if query == options[3]:
 #     st.subheader('Regulacion')
 
-if query == options[3]:
-    st.subheader('Milestones')
-    import streamlit as st
-    import datetime
+# if query == options[3]:
+#     st.subheader('Milestones')
+    
+    
+    
+    
+    
+    
+    
+    # import streamlit as st
+    # import datetime
 
-    # Definir las fechas de inicio y fin
-    start_date = datetime.date(2010, 1, 1)
-    end_date = datetime.date(2024, 12, 1)
+    # # Definir las fechas de inicio y fin
+    # start_date = datetime.date(2010, 1, 1)
+    # end_date = datetime.date(2024, 12, 1)
 
-    # Crear una lista con el primer día de cada mes
-    months = []
-    current_date = start_date
-    while current_date <= end_date:
-        months.append(current_date)
-        current_date = datetime.date(current_date.year + (current_date.month // 12), ((current_date.month % 12) + 1), 1)
+    # # Crear una lista con el primer día de cada mes
+    # months = []
+    # current_date = start_date
+    # while current_date <= end_date:
+    #     months.append(current_date)
+    #     current_date = datetime.date(current_date.year + (current_date.month // 12), ((current_date.month % 12) + 1), 1)
 
-    # Convertir la lista en una lista de tuplas con el primer día de cada mes
-    month_tuples = [(month, month.strftime('%b %Y')) for month in months]
+    # # Convertir la lista en una lista de tuplas con el primer día de cada mes
+    # month_tuples = [(month, month.strftime('%b %Y')) for month in months]
 
-    # Configurar el slider de fechas utilizando las tuplas
-    date_range = st.slider("Selecciona un rango de fechas:",
-                        value=(start_date, end_date),
-                        min_value=start_date,
-                        max_value=end_date,
-                        format="MMM YYYY",
-                        # step=months,
-                        key="date_range")
-                        # slider_format="custom",
-                        # options=month_tuples)
+    # # Configurar el slider de fechas utilizando las tuplas
+    # date_range = st.slider("Selecciona un rango de fechas:",
+    #                     value=(start_date, end_date),
+    #                     min_value=start_date,
+    #                     max_value=end_date,
+    #                     format="MMM YYYY",
+    #                     # step=months,
+    #                     key="date_range")
+    #                     # slider_format="custom",
+    #                     # options=month_tuples)
 
-    # Mostrar el rango de fechas seleccionado
-    st.write("Rango de fechas seleccionado:", date_range[0].strftime('%Y-%m'), "a", date_range[1].strftime('%Y-%m'))
+    # # Mostrar el rango de fechas seleccionado
+    # st.write("Rango de fechas seleccionado:", date_range[0].strftime('%Y-%m'), "a", date_range[1].strftime('%Y-%m'))
