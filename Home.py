@@ -8,7 +8,7 @@ from app.connection.get_data import get_data
 query2 = 'SELECT * FROM [monthly_report]'
 df = get_data(query2)
 
-options = ['Home','Goals','Market','Regulation','Milestones']
+options = ['Home','Goals','Market','Milestones']
 query = st.sidebar.radio('Sección',options)
 
 if query == options[0]:
@@ -33,28 +33,28 @@ if query == options[1]:
 
 if query == options[2]:
     st.subheader('Market')
-    menu_items = ["New York", "Transport", "Market"]
-    menu_selection = st.sidebar.radio("Sections", menu_items)
-    if menu_selection == menu_items[0]:
-        col1, col2 = st.columns([1, 3])
-        with col1:
-            st.write('New York City')
-            image = Image.open('pages/NYC.png')
-            st.image(image, caption='Boroughs')
-        with col2:
-            st.write('Boroughs')
-            image = Image.open('pages/NYCTable.png')
-            st.image(image, caption='Data')
-    if menu_selection == menu_items[1]:
-        st.write('Transport')
-    if menu_selection == menu_items[2]:
-        st.write('Market')
+    # menu_items = ["New York", "Transport", "Market"]
+    # menu_selection = st.sidebar.radio("Sections", menu_items)
+    # if menu_selection == menu_items[0]:
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.write('New York City')
+        image = Image.open('pages/NYC.png')
+        st.image(image, caption='Boroughs')
+    with col2:
+        st.write('Boroughs')
+        image = Image.open('pages/NYCTable.png')
+        st.image(image, caption='Data')
+    # if menu_selection == menu_items[1]:
+    #     st.write('Transport')
+    # if menu_selection == menu_items[2]:
+    #     st.write('Market')
         
-if query == options[3]:
-    st.subheader('Regulacion')
+# if query == options[3]:
+#     st.subheader('Regulacion')
 
-if query == options[4]:
-    st.subheader('Hitos')
+if query == options[3]:
+    st.subheader('Milestones')
     import streamlit as st
     import datetime
 
