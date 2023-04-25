@@ -1,8 +1,46 @@
 import pandas as pd
 import streamlit as st
+import utils.paths as path
+import base64
+from io import BytesIO
+# Ruta del directorio que contiene el archivo
+data_dir = path.make_dir_function(['app','data']) #'roy',
+# Lectura del PDF como un objeto binario
+with open(data_dir("Informe_Final.pdf"), "rb") as f:
+    archivo_pdf = f.read()
+# Transformando el pdf a 
+def codificar_base64(archivo):
+    with open(archivo, "rb") as f:
+        datos = f.read()
+        base64_pdf = base64.b64encode(datos).decode('utf-8')
+    return base64_pdf
+
+st.markdown("""
+            <style>
+            .btn-download-pdf {
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                text-align: center;
+                width: 210px;
+            }
+            .btn-download-pdf a{
+                text-decoration: none;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+# Boton de descarga
+descarga = st.button('Generate Analysis Report in Spanish', type='primary')
+if descarga:
+    b64 = codificar_base64(data_dir('Informe_Final.pdf'))
+    href = f"""
+    <p class="btn-download-pdf" align="center">
+        <a href="data:application/octet-stream;base64,{b64}" download="Informe_Final.pdf">Download PDF</a>
+    </p>"""
+    st.markdown(href, unsafe_allow_html=True)
 
 st.title('Summary')
-st.markdown('[Spanish Final Report](https://drive.google.com/file/d/1qEj5GNK7Wj63LplsRg7F-1ClpW_enPXz/view?usp=share_link)', unsafe_allow_html=True)
+# st.markdown('[Spanish Final Report](https://drive.google.com/file/d/1qEj5GNK7Wj63LplsRg7F-1ClpW_enPXz/view?usp=share_link)', unsafe_allow_html=True)
 st.header('The State of the Taxi Industry')
 st.subheader('Taxi Trip Counts and Locations')
 st.write('Monthly Taxi trip counts steadily decreased more than 80% since 2013 to 2023')
