@@ -2,7 +2,7 @@ import streamlit as st
 from reports.noise_pollution_report import plot_rat_sounds_voltrafic, data_v0, kpi_noise_pollution_reduction, data_v1, unique_boroughs, plot_count_sounds_vehvol, plot_both_vehvol_sounds
 import plotly.graph_objects as go
 
-
+print(data_v0.head())
 st.set_page_config(page_title="Dashboard", page_icon=":car:", layout="wide")
 
 sp_1, bor_col, sp_2, prop_type_col, sp_3  = st.columns((.1, 1, 0.1, 1,.1))

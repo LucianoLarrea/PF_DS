@@ -7,6 +7,7 @@ import numpy as np
 # Directorio de los datos crudos / raw data
 
 st_data_dir = path.make_dir_function(['app','data']) #'roy',
+
 # Lectura de los datasets
 noise_pollution_dir = st_data_dir('noise_pollution.parquet')
 vehicular_volume_dir = st_data_dir('vehicular_volume.csv')

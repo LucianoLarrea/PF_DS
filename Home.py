@@ -24,6 +24,7 @@ if query == options[0]:
 
 if query == options[1]:
     st.subheader('Goals')
+    # st.markdown('This work aims to answer the following questions:')
     st.write('This work aims to answer the following questions:')
     st.write('¿What are the dimensions of the market?	=>  Market Share')
     st.write('¿What are the market prospects?	=>	Trends')
