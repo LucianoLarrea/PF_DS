@@ -386,22 +386,23 @@ if menu_selection == menu_items[4]:
 
 
 
-# start_date = st.sidebar.date_input('Start Date',datetime.date(2013, 1, 1))
-# end_date = st.sidebar.date_input('End Date',datetime.date(2023, 1, 1)) 
+start_date = st.sidebar.date_input('Start Date',datetime.date(2013, 1, 1))
+end_date = st.sidebar.date_input('End Date',datetime.date(2023, 1, 1)) 
 
-# # Crear una lista con el primer día de cada mes
-# months = []
-# current_date = start_date
-# while current_date <= end_date:
-#     months.append(current_date)
-#     current_date = datetime.date(current_date.year + (current_date.month // 12), ((current_date.month % 12) + 1), 1)
-# # Convertir la lista en una lista de tuplas con el primer día de cada mes
-# month_tuples = [(month, month.strftime('%b %Y')) for month in months]
-# # Configurar el slider de fechas utilizando las tuplas
-# date_range = st.slider("Select a date range:",
-#                     value=(start_date, end_date),
-#                     min_value=start_date,
-#                     max_value=end_date,
-#                     format="MMM YYYY",
-#                     # step=months,
-#                     key="date_range")
+# Crear una lista con el primer día de cada mes
+months = []
+current_date = start_date
+while current_date <= end_date:
+    months.append(current_date)
+    current_date = datetime.date(current_date.year + (current_date.month // 12), ((current_date.month % 12) + 1), 1)
+# Convertir la lista en una lista de tuplas con el primer día de cada mes
+month_tuples = [(month, month.strftime('%b %Y')) for month in months]
+# Configurar el slider de fechas utilizando las tuplas
+date_range = st.slider("Select a date range:",
+                    value=(start_date, end_date),
+                    min_value=start_date,
+                    max_value=end_date,
+                    format="MMM YYYY",
+                    # step=months,
+                    key="date_range")
+st.write(date_range)
