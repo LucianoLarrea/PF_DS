@@ -16,9 +16,23 @@ df.index = pd.to_datetime(df.index)
 # def dashboard_ui():
 st.set_page_config(page_title="Dashboard", page_icon=":car:", layout="wide")
 fleet = st.sidebar.number_input('Fleet Number',1,100000,value=1000)
-monthdate = st.sidebar.date_input("Month Date", datetime.date(2023, 1, 1))
+# monthdate = st.sidebar.date_input("Month Date", datetime.date(2023, 1, 1))
 # Obtener la fecha seleccionada en el date_input
-selected_date = pd.to_datetime(monthdate)
+# selected_date = pd.to_datetime(monthdate)
+# Obtener la fecha seleccionada en el date_input
+start_date = datetime.date(2015, 1, 1)  #st.date_input('Start Date',
+end_date = datetime.date(2023, 1, 1)    # st.date_input('End Date',
+current_date = datetime.date(2023, 1, 1)
+
+selected_date = st.sidebar.slider("Select a date range:",
+                    value=(current_date),
+                    min_value=start_date,
+                    max_value=end_date,
+                    format="MMM YYYY",
+                    # step = month,
+                    key="date_range")
+selected_date = selected_date.replace(day=1)
+selected_date = pd.to_datetime(selected_date)
 # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
 unique_vehicles_value = df[df['license_class']=='Yellow'].loc[selected_date, 'unique_vehicles']
 market_share = fleet / (fleet + unique_vehicles_value)
