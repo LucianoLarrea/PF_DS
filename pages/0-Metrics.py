@@ -33,6 +33,7 @@ selected_date = st.sidebar.slider("Select a date range:",
                     key="date_range")
 selected_date = selected_date.replace(day=1)
 selected_date = pd.to_datetime(selected_date)
+selected_date_pos = df.index.get_loc(selected_date)
 # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
 unique_vehicles_value = df[df['license_class']=='Yellow'].loc[selected_date, 'unique_vehicles']
 market_share = fleet / (fleet + unique_vehicles_value)
@@ -60,6 +61,7 @@ if menu_selection == menu_items[0]:
         st.metric('EV Taxi Market Share', f'{ev_market_share:.2f}%')
     
     fig = go.Figure()
+    # st.plotly_chart(fig, config=dict(displayModeBar=False), use_container_width=True)
     # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='unique_vehicles', color='color')
     if  st.checkbox('Show Vehicles FHVHV',value=False):
         fig.add_trace(go.Scatter(x=df[df['license_class']=='FHV - High Volume']['month_year1'], y=df[df['license_class']=='FHV - High Volume']['unique_vehicles'], mode='lines', name='FHV - High Volume'))
@@ -67,16 +69,52 @@ if menu_selection == menu_items[0]:
     yellow_trace = go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['unique_vehicles'], mode='lines', name='Yellow')
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
-    idx_max_y = df[df['license_class']=='Yellow']['unique_vehicles'].idxmax()   
+    idx_max_y = df[df['license_class']=='Yellow']['unique_vehicles'].idxmax()  
+    
+    # fig.add_shape(type='line',
+    #         x0=proy_Y.index[selected_date_pos],
+    #         y0=0,
+    #         x1=proy_Y.index[selected_date_pos],
+    #         y1=max(df[df['license_class']=='Yellow']['unique_vehicles']),
+    #         line=dict(color='red', width=2, dash='dash'))
+    # fig.add_shape(
+    #         type='line',
+    #         x0=proy_Y.index[0],
+    #         y0=proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'],
+    #         x1=proy_Y.index[-1],
+    #         y1=proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'],
+    #         line=dict(color='red', width=2, dash='dash'))
+    
+    fig.add_shape(type="line",
+            x0=df.index[selected_date_pos], 
+            y0=2000,
+            x1=df.index[selected_date_pos], 
+            y1=max_y,
+            line=dict(color='red', dash='dash'))
+    fig.add_shape(type="line",
+            x0=df.index[0], 
+            y0=max_y,
+            x1=df.index[-1], 
+            y1=max_y,
+            line=dict(color='red', dash='dash'))
+    
+    
 
-    fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
-              x1=df['month_year1'].iloc[-1], y1=max_y,
-              line=dict(color='red', dash='dash'))
-    fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=2000,
-              x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
-              line=dict(color='red', dash='dash'))
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], 
+    #           y0=2000,
+    #           x1=df.loc[idx_max_y, 'month_year1'], 
+    #           y1=max_y,
+    #           line=dict(color='red', dash='dash'))
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], 
+    #           y0=max_y,
+    #           x1=df['month_year1'].iloc[-1], 
+    #           y1=max_y,
+    #           line=dict(color='red', dash='dash'))
+    
+    
+
     
     fig.update_layout(
     title='Unique Vehicles - Max Yellow: '+ str(max_y),
@@ -97,18 +135,22 @@ if menu_selection == menu_items[0]:
     idx_max_y = df[df['license_class']=='Yellow']['unique_drivers'].idxmax()   #df[df['license_class']=='Yellow']['unique_vehicles']
 
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
-              x1=df['month_year1'].iloc[-1], y1=max_y,
+              x0=df.loc[idx_max_y, 'month_year1'], 
+              y0=max_y,
+              x1=df['month_year1'].iloc[-1], 
+              y1=max_y,
               line=dict(color='red', dash='dash'))
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=0,
-              x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
+              x0=df.loc[idx_max_y, 'month_year1'], 
+              y0=0,
+              x1=df.loc[idx_max_y, 'month_year1'], 
+              y1=max_y,
               line=dict(color='red', dash='dash'))
 
 
 
     fig.update_layout(
-    title='Unique Drivers- Max Yellow: '+ str(max_y),
+    title='Unique Drivers - Max Yellow: '+ str(max_y),
     xaxis=dict(title='Month & Year', showgrid=False),
     yaxis=dict(title='Unique Drivers'))
     st.plotly_chart(fig, use_container_width=True)
@@ -124,15 +166,19 @@ if menu_selection == menu_items[0]:
     idx_max_y = df[df['license_class']=='Yellow']['drivers_vehicles_ratio'].idxmax()   
 
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
-              x1=df['month_year1'].iloc[-1], y1=max_y,
+              x0=df.loc[idx_max_y, 'month_year1'], 
+              y0=max_y,
+              x1=df['month_year1'].iloc[-1], 
+              y1=max_y,
               line=dict(color='red', dash='dash'))
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=1,
-              x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
+              x0=df.loc[idx_max_y, 'month_year1'], 
+              y0=1,
+              x1=df.loc[idx_max_y, 'month_year1'], 
+              y1=max_y,
               line=dict(color='red', dash='dash'))
     fig.update_layout(
-    title='Drivers / Vehicles Ratio',
+    title='Drivers / Vehicles Ratio - Max Yellow: '+ str(round(max_y,1)),
     xaxis=dict(title='Month & Year', showgrid=False),
     yaxis=dict(title='Drivers / Vehicles Ratio'))
     st.plotly_chart(fig, use_container_width=True)
@@ -145,12 +191,12 @@ if menu_selection == menu_items[1]:
     with col1:
         # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
         trips_day_value = df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day']
-        st.metric('Market Trips per day USD',trips_day_value)
+        st.metric('Market Trips per day',trips_day_value)
     with col2:
         st.metric('Market Share', f'{market_share_percentage:.2f}%')
     with col3:
         shared_trips = int(trips_day_value * market_share)
-        st.metric('Fleet Trips per day USD',shared_trips)
+        st.metric('Fleet Trips per day',shared_trips)
 
     # colors = {'Yellow': 'Yellow', 'Green': 'Green', 'FHV - High Volume': 'FHVHV','FHV - Black Car':'Black','FHV - Lux Limo':'Lux Limo','FHV - Livery':'Livery'}
 
