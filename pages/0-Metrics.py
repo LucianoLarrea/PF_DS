@@ -4,7 +4,7 @@ import streamlit as st
 import datetime
 import plotly.graph_objs as go
 import plotly.express as px
-import app.connection.get_data as get_data
+# import app.connection.get_data as get_data
 
 # df = pd.read_csv('Proyecto_grupal_DS/luciano/df.csv',index_col=13)
 df = pd.read_csv('df.csv',index_col=13)
@@ -34,6 +34,8 @@ selected_date = st.sidebar.slider("Select a date range:",
 selected_date = selected_date.replace(day=1)
 selected_date = pd.to_datetime(selected_date)
 selected_date_pos = df.index.get_loc(selected_date)
+
+
 # Obtener el valor de unique_vehicles correspondiente a la fecha seleccionada
 unique_vehicles_value = df[df['license_class']=='Yellow'].loc[selected_date, 'unique_vehicles']
 market_share = fleet / (fleet + unique_vehicles_value)
@@ -71,50 +73,28 @@ if menu_selection == menu_items[0]:
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['unique_vehicles'].idxmax()  
     
-    # fig.add_shape(type='line',
-    #         x0=proy_Y.index[selected_date_pos],
-    #         y0=0,
-    #         x1=proy_Y.index[selected_date_pos],
-    #         y1=max(df[df['license_class']=='Yellow']['unique_vehicles']),
-    #         line=dict(color='red', width=2, dash='dash'))
-    # fig.add_shape(
-    #         type='line',
-    #         x0=proy_Y.index[0],
-    #         y0=proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'],
-    #         x1=proy_Y.index[-1],
-    #         y1=proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'],
-    #         line=dict(color='red', width=2, dash='dash'))
-    
     fig.add_shape(type="line",
-            x0=df.index[selected_date_pos], 
-            y0=2000,
-            x1=df.index[selected_date_pos], 
-            y1=max_y,
-            line=dict(color='red', dash='dash'))
-    fig.add_shape(type="line",
-            x0=df.index[0], 
-            y0=max_y,
-            x1=df.index[-1], 
-            y1=max_y,
+            x0=datetime.date(2010, 1, 1), 
+            y0=unique_vehicles_value,
+            x1=datetime.date(2023, 1, 1), 
+            y1=unique_vehicles_value,
             line=dict(color='red', dash='dash'))
     
+    fig.add_shape(type="line",
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=15000,   #max(yellow_trace.y)
+                line=dict(color='red', dash='dash'))
     
-
-    # fig.add_shape(type="line",
-    #           x0=df.loc[idx_max_y, 'month_year1'], 
-    #           y0=2000,
-    #           x1=df.loc[idx_max_y, 'month_year1'], 
-    #           y1=max_y,
-    #           line=dict(color='red', dash='dash'))
-    # fig.add_shape(type="line",
-    #           x0=df.loc[idx_max_y, 'month_year1'], 
-    #           y0=max_y,
-    #           x1=df['month_year1'].iloc[-1], 
-    #           y1=max_y,
-    #           line=dict(color='red', dash='dash'))
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=unique_vehicles_value,
+                   text="y value: {}".format(unique_vehicles_value),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
     
-    
-
     
     fig.update_layout(
     title='Unique Vehicles - Max Yellow: '+ str(max_y),
@@ -134,20 +114,28 @@ if menu_selection == menu_items[0]:
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['unique_drivers'].idxmax()   #df[df['license_class']=='Yellow']['unique_vehicles']
 
-    fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], 
-              y0=max_y,
-              x1=df['month_year1'].iloc[-1], 
-              y1=max_y,
-              line=dict(color='red', dash='dash'))
-    fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], 
-              y0=0,
-              x1=df.loc[idx_max_y, 'month_year1'], 
-              y1=max_y,
-              line=dict(color='red', dash='dash'))
 
+    fig.add_shape(type="line",
+            x0=datetime.date(2010, 1, 1), 
+            y0=df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers'],
+            x1=datetime.date(2023, 1, 1), 
+            y1=df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers'],
+            line=dict(color='red', dash='dash'))
+    
+    fig.add_shape(type="line",
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=max(yellow_trace.y),
+                line=dict(color='red', dash='dash'))
 
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers'],
+                   text="y value: {}".format(df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers']),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
 
     fig.update_layout(
     title='Unique Drivers - Max Yellow: '+ str(max_y),
@@ -165,18 +153,40 @@ if menu_selection == menu_items[0]:
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['drivers_vehicles_ratio'].idxmax()   
 
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], 
+    #           y0=max_y,
+    #           x1=df['month_year1'].iloc[-1], 
+    #           y1=max_y,
+    #           line=dict(color='red', dash='dash'))
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], 
+    #           y0=1,
+    #           x1=df.loc[idx_max_y, 'month_year1'], 
+    #           y1=max_y,
+    #           line=dict(color='red', dash='dash'))
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], 
-              y0=max_y,
-              x1=df['month_year1'].iloc[-1], 
-              y1=max_y,
-              line=dict(color='red', dash='dash'))
+            x0=datetime.date(2010, 1, 1), 
+            y0=df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],
+            x1=datetime.date(2023, 1, 1), 
+            y1=df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],
+            line=dict(color='red', dash='dash'))
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], 
-              y0=1,
-              x1=df.loc[idx_max_y, 'month_year1'], 
-              y1=max_y,
-              line=dict(color='red', dash='dash'))
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=max(yellow_trace.y),
+                line=dict(color='red', dash='dash'))
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],
+                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],2)),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
+    
     fig.update_layout(
     title='Drivers / Vehicles Ratio - Max Yellow: '+ str(round(max_y,1)),
     xaxis=dict(title='Month & Year', showgrid=False),
@@ -220,14 +230,25 @@ if menu_selection == menu_items[1]:
     idx_max_y = df[df['license_class']=='Yellow']['trips_per_day'].idxmax()
 
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
-              x1=df['month_year1'].iloc[-1], y1=max_y,
-              line=dict(color='red', dash='dash'))
+            x0=datetime.date(2010, 1, 1), 
+            y0=df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day'],
+            x1=datetime.date(2023, 1, 1), 
+            y1=df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day'],
+            line=dict(color='red', dash='dash'))
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=0,
-              x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
-              line=dict(color='red', dash='dash'))
-
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=max(yellow_trace.y),
+                line=dict(color='red', dash='dash'))
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day'],
+                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day'],2)),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
 
     fig.update_layout(
     title='Trips per Day - Max Yellow: '+ str(max_y),
@@ -279,14 +300,37 @@ if menu_selection == menu_items[2]:
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['farebox_per_day'].idxmax()   
 
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
+    #           x1=df['month_year1'].iloc[-1], y1=max_y,
+    #           line=dict(color='red', dash='dash'))
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], y0=2000,
+    #           x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
+    #           line=dict(color='red', dash='dash'))
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
-              x1=df['month_year1'].iloc[-1], y1=max_y,
-              line=dict(color='red', dash='dash'))
+            x0=datetime.date(2010, 1, 1), 
+            y0=df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day'],
+            x1=datetime.date(2023, 1, 1), 
+            y1=df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day'],
+            line=dict(color='red', dash='dash'))
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=2000,
-              x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
-              line=dict(color='red', dash='dash'))
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=max(yellow_trace.y),
+                line=dict(color='red', dash='dash'))
+    
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day'],
+                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day'],2)),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
+    
     fig.update_layout(
     title='Average Farebox per Day',
     xaxis=dict(title='Month & Year', showgrid=False),
@@ -313,26 +357,63 @@ if menu_selection == menu_items[3]:
     fig.add_trace(yellow_trace)
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['monthly_farebox_per_vehicle_on_road'].idxmax()   
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
-              x1=df['month_year1'].iloc[-1], y1=max_y,
-              line=dict(color='red', dash='dash'))
+            x0=datetime.date(2010, 1, 1), 
+            y0=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road'],
+            x1=datetime.date(2023, 1, 1), 
+            y1=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road'],
+            line=dict(color='red', dash='dash'))
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=0,
-              x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
-              line=dict(color='red', dash='dash'))
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=max(yellow_trace.y),
+                line=dict(color='red', dash='dash'))
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road'],
+                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road'],2)),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
+    
     fig.update_layout(
     title='Monthly Farebox Per Vehicle On Road',
     xaxis=dict(title='Month & Year', showgrid=False),
     yaxis=dict(title='Monthly Farebox Per Vehicle On Road'))
     st.plotly_chart(fig, use_container_width=True)
+    fig = go.Figure()
+    yellow_trace = go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['monthly_farebox_per_trip_on_road'], mode='lines', name='Yellow')
+    fig.add_trace(yellow_trace)
+    # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='monthly_farebox_per_trip_on_road', color='color')
+    fig.add_shape(type="line",
+            x0=datetime.date(2010, 1, 1), 
+            y0=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road'],
+            x1=datetime.date(2023, 1, 1), 
+            y1=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road'],
+            line=dict(color='red', dash='dash'))
     
-    fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='monthly_farebox_per_trip_on_road', color='color')
+    fig.add_shape(type="line",
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=max(yellow_trace.y),
+                line=dict(color='red', dash='dash'))
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road'],
+                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road'],2)),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
     fig.update_layout(
     title='Monthly Farebox Per Trip On Road',
     xaxis=dict(title='Month & Year', showgrid=False),
     yaxis=dict(title='Monthly Farebox Per Trip On Road'))
     st.plotly_chart(fig, use_container_width=True)
+    
     fig = go.Figure()
     # fig = px.line(df[df['license_class']=='Yellow'], x='month_date', y='monthly_trips_per_vehicle_on_road', color='color')
     yellow_trace = go.Scatter(x=df[df['license_class']=='Yellow']['month_year1'], y=df[df['license_class']=='Yellow']['monthly_trips_per_vehicle_on_road'], mode='lines', name='Yellow')
@@ -340,14 +421,34 @@ if menu_selection == menu_items[3]:
     max_y = max(yellow_trace.y)
     idx_max_y = df[df['license_class']=='Yellow']['monthly_trips_per_vehicle_on_road'].idxmax()   
 
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
+    #           x1=df['month_year1'].iloc[-1], y1=max_y,
+    #           line=dict(color='red', dash='dash'))
+    # fig.add_shape(type="line",
+    #           x0=df.loc[idx_max_y, 'month_year1'], y0=0,
+    #           x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
+    #           line=dict(color='red', dash='dash'))
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=max_y,
-              x1=df['month_year1'].iloc[-1], y1=max_y,
-              line=dict(color='red', dash='dash'))
+            x0=datetime.date(2010, 1, 1), 
+            y0=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road'],
+            x1=datetime.date(2023, 1, 1), 
+            y1=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road'],
+            line=dict(color='red', dash='dash'))
+    
     fig.add_shape(type="line",
-              x0=df.loc[idx_max_y, 'month_year1'], y0=0,
-              x1=df.loc[idx_max_y, 'month_year1'], y1=max_y,
-              line=dict(color='red', dash='dash'))
+                x0=selected_date, 
+                y0=0,
+                x1=selected_date, 
+                y1=max(yellow_trace.y),
+                line=dict(color='red', dash='dash'))
+    selection_date = selected_date.strftime('%y-%m')
+    fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
+                   text="x value: {}".format(selection_date),
+                   showarrow=True, arrowhead=1, ax=-50, ay=-50)
+    fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road'],
+                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road'],2)),
+                   showarrow=True, arrowhead=1, ax=50, ay=50)
     fig.update_layout(
     title='Monthly Trips Per Vehicle On Road',
     xaxis=dict(title='Month & Year', showgrid=False),
