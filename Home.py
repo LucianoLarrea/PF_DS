@@ -4,7 +4,8 @@ from PIL import Image
 import plotly.graph_objs as go
 import plotly.express as px
 from app.connection.get_data import get_data
-
+# import utils.paths as path 
+st.set_page_config(page_title="Dashboard", page_icon=":car:", layout="wide")
 query2 = 'SELECT * FROM [monthly_report]'
 df = get_data(query2)
 
@@ -12,25 +13,169 @@ options = ['Home','Goals','Market']
 query = st.sidebar.radio('Sección',options)
 
 if query == options[0]:
-    image = Image.open('pages/DGRL.png')
-    st.image(image, caption='Transforming data into knowledge')
-    st.write('Team')
+    st.markdown("""
+                <style>
+    .wrapper {
+    display: flex;
+    justify-content: space-between;
+    }
 
-    st.write('Franco Myburg DATA ENGINEER')
-    st.write('Ivanna Villa DATA ANALYST')
-    st.write('Jaime Ospino DATA ENGINEER')
-    st.write('Luciano Larrea DATA SCIENTIST')
-    st.write('Roy Quilca DATA ENGINEER')
+    .profile {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 18%;
+        background-color: #f1f1f1;
+        border: 2px solid #f1f1f1;
+        text-align: center;
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .profile a img {
+        border-radius: 50%;
+        width: 140px;
+    }
+    
+    .profile-description {
+    font-size: 1.2em;
+    /* color: #FFF; */
+    margin-bottom: 5px;
+    text-align: center;
+    }
+    a {    
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #FFF;
+    }
+
+    a:hover {
+    text-decoration: none;
+    background-color: #00405d;
+    color: #FFFFFF;
+    border-radius: 5px;
+    font-weight: 600;
+    height: 100%;
+    }
+    a:hover a {
+    background-color: #00405d;
+    color: #FFFFFF;
+    font-weight: 600;
+    padding: 5px;
+    height: 100%;
+    }
+    </style>  
+                """, unsafe_allow_html=True)
+
+    # Labs/PG/PF_DS/pages/DGRL.png
+    # logo = path.make_dir_function('pages')
+    # st.markdown(f""" 
+    #             <div align="center">
+    #              <img src="{logo("DGRL.png")}" width="500" height="300"/>
+    #             </div>
+    #             """, unsafe_allow_html=True)
+    image = Image.open('pages/DGRL.png')
+    st.image(image, use_column_width=True)
+
+    
+    st.markdown("""
+            
+                 <h4 align="center">Team</h4>
+                <div class="wrapper">
+                <div class="profile">
+                <a href="https://www.linkedin.com/in/franco-jonas-myburg-6095b8255/"><img alt="Franco" title="Connect with Franco" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" >DATA ENGINEER</a>
+                </div>
+
+                <div class="profile">
+                <a href="https://www.linkedin.com/in/ivannagvdc/"><img alt="Ivanna" title="Connect with Ivanna" src="https://media.licdn.com/dms/image/C4E03AQHWmp3AQlPYSA/profile-displayphoto-shrink_200_200/0/1631153346220?e=1687996800&v=beta&t=1vKnwoPWjJgdPQ5JlEs3nBRxqYCo84X2wawG3Lj42fc">DATA ANALYST</a>
+                </div>
+
+                <div class="profile">
+                <a href="https://www.linkedin.com/in/jospinoponce/"><img alt="Jaime" title="Connect with Jaime" src="https://media.licdn.com/dms/image/C4E03AQEEQHSU2dliPg/profile-displayphoto-shrink_200_200/0/1535338153237?e=1687996800&v=beta&t=bKlTbOlP8OILR3f67PDsELBrnt7jp2-2hYVxLwdZonA">DATA ENGINEER</a>
+                </div>
+
+                <div class="profile">
+                <a href="https://www.linkedin.com/in/takticflow/"><img alt="Luciano" title="Connect with Luciano" src="https://media.licdn.com/dms/image/D4D03AQFWWFxX4oYttw/profile-displayphoto-shrink_200_200/0/1674740829816?e=1687996800&v=beta&t=J1iCwMtATTUJmi-uo0g7aqijSuvQtjrBhcj8JAk1vY8">
+                PROJECT MANAGER & DATA SCIENTIST</a>
+                </div>
+
+                <div class="profile">
+                <a href="https://www.linkedin.com/in/royquillca/"><img alt="Roy" title="Connect with Roy" src="https://media.licdn.com/dms/image/D4D35AQGg3Uf7pz53-g/profile-framedphoto-shrink_200_200/0/1657318118230?e=1683129600&v=beta&t=BA2wiW6m6uFX5zvyFB2NbV98ngQ8jfmO7et1LPoJzU4" class="profile-description">DATA ENGINEER</a>
+
+                </div>
+                </div>
+                """, unsafe_allow_html=True)
+
 
 if query == options[1]:
-    st.subheader('Goals')
+    st.markdown("""
+                <style>
+                .objectives {
+                        display: flex;
+                        flex-direction: row;
+                        background-color: #f1f1f1;
+                        border: 2px solid #f1f1f1;
+                        text-align: center;
+                        font-size: 20px;
+                        padding: 5px;
+                        border-radius: 10px;
+                        height: 120px;
+                        margin-bottom: 20px;
+                        color:#002b36;
+                        justify-content: space-between;
+                        align-items: center;
+                        align-content:center;
+                    }
+                .objectives h4 {
+                    padding-left:30px;
+                    width: 60%;
+                    text-align: center;
+                    # margin: auto;
+                    color:#002b36;
+                }
+                .objectives p {
+                    # margin: auto;
+                    width: 30%;
+                    text-align: center;
+                    font-size : 20px;
+                    font-weight: 600;
+                }
+                </style>
+                """, unsafe_allow_html=True)
+    
+    st.markdown("""
+                <h2 align="center"> Goals </h2>
+                <h3 align="center">This work aims to answer the following questions:</h3>
+                <div class="objectives">
+                    <h4 align="center">¿What are the dimensions of the market?</h4>
+                    <p>Market Share</p>
+                </div>
+                <div class="objectives">
+                    <h4 align="center">¿What are the market prospects?</h4>
+                    <p>Trends</p>
+                </div>
+                <div class="objectives">
+                    <h4 align="center">¿What are the areas with the highest demand?</h4>
+                    <p>Metrics</p>
+                </div>
+                <div class="objectives">
+                    <h4 align="center">¿What are the projected revenues?</h4>
+                    <p>KPIs</p>
+                </div>
+                <div class="objectives">
+                    <h4 align="center">¿What is the projected positive environmental impact?</h4>
+                    <p>Calculator</p>
+                </div>
+                """, unsafe_allow_html=True)
     # st.markdown('This work aims to answer the following questions:')
-    st.write('This work aims to answer the following questions:')
-    st.write('¿What are the dimensions of the market?	=>  Market Share')
-    st.write('¿What are the market prospects?	=>	Trends')
-    st.write('¿What are the areas with the highest demand?	=>	Metrics')
-    st.write('¿What are the projected revenues?		=>	KPIs')
-    st.write('¿What is the projected positive environmental impact?	=>	Calculator')
+    # st.write('This work aims to answer the following questions:')
+    # st.write('¿What are the dimensions of the market?	=>  Market Share')
+    # st.write('¿What are the market prospects?	=>	Trends')
+    # st.write('¿What are the areas with the highest demand?	=>	Metrics')
+    # st.write('¿What are the projected revenues?		=>	KPIs')
+    # st.write('¿What is the projected positive environmental impact?	=>	Calculator')
 
 if query == options[2]:
     st.subheader('Market')
@@ -61,35 +206,4 @@ if query == options[2]:
     
     
     
-    
-    
-    # import streamlit as st
-    # import datetime
 
-    # # Definir las fechas de inicio y fin
-    # start_date = datetime.date(2010, 1, 1)
-    # end_date = datetime.date(2024, 12, 1)
-
-    # # Crear una lista con el primer día de cada mes
-    # months = []
-    # current_date = start_date
-    # while current_date <= end_date:
-    #     months.append(current_date)
-    #     current_date = datetime.date(current_date.year + (current_date.month // 12), ((current_date.month % 12) + 1), 1)
-
-    # # Convertir la lista en una lista de tuplas con el primer día de cada mes
-    # month_tuples = [(month, month.strftime('%b %Y')) for month in months]
-
-    # # Configurar el slider de fechas utilizando las tuplas
-    # date_range = st.slider("Selecciona un rango de fechas:",
-    #                     value=(start_date, end_date),
-    #                     min_value=start_date,
-    #                     max_value=end_date,
-    #                     format="MMM YYYY",
-    #                     # step=months,
-    #                     key="date_range")
-    #                     # slider_format="custom",
-    #                     # options=month_tuples)
-
-    # # Mostrar el rango de fechas seleccionado
-    # st.write("Rango de fechas seleccionado:", date_range[0].strftime('%Y-%m'), "a", date_range[1].strftime('%Y-%m'))

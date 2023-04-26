@@ -89,10 +89,10 @@ if menu_selection == menu_items[0]:
     
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=unique_vehicles_value,
-                   text="y value: {}".format(unique_vehicles_value),
+                   text="value: {}".format(unique_vehicles_value),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     
@@ -131,10 +131,10 @@ if menu_selection == menu_items[0]:
 
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers'],
-                   text="y value: {}".format(df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers']),
+                   text="value: {}".format(df[df['license_class']=='Yellow'].loc[selected_date, 'unique_drivers']),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
 
     fig.update_layout(
@@ -181,10 +181,10 @@ if menu_selection == menu_items[0]:
                 line=dict(color='red', dash='dash'))
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],
-                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],2)),
+                   text="value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'drivers_vehicles_ratio'],2)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     fig.update_layout(
@@ -244,10 +244,10 @@ if menu_selection == menu_items[1]:
                 line=dict(color='red', dash='dash'))
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day'],
-                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day'],2)),
+                   text="value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'trips_per_day'],2)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
 
     fig.update_layout(
@@ -325,10 +325,10 @@ if menu_selection == menu_items[2]:
     
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day'],
-                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day'],2)),
+                   text="value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'farebox_per_day'],2)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     fig.update_layout(
@@ -373,10 +373,10 @@ if menu_selection == menu_items[3]:
                 line=dict(color='red', dash='dash'))
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road'],
-                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road'],2)),
+                   text="value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_vehicle_on_road'],2)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     fig.update_layout(
@@ -403,10 +403,10 @@ if menu_selection == menu_items[3]:
                 line=dict(color='red', dash='dash'))
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road'],
-                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road'],2)),
+                   text="value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_farebox_per_trip_on_road'],2)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     fig.update_layout(
     title='Monthly Farebox Per Trip On Road',
@@ -444,10 +444,10 @@ if menu_selection == menu_items[3]:
                 line=dict(color='red', dash='dash'))
     selection_date = selected_date.strftime('%y-%m')
     fig.add_annotation(x=selection_date, y=max(yellow_trace.y),
-                   text="x value: {}".format(selection_date),
+                   text="date: {}".format(selection_date),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=selection_date, y=df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road'],
-                   text="y value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road'],2)),
+                   text="value: {}".format(round(df[df['license_class']=='Yellow'].loc[selected_date, 'monthly_trips_per_vehicle_on_road'],2)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     fig.update_layout(
     title='Monthly Trips Per Vehicle On Road',

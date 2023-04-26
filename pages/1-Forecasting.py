@@ -130,10 +130,10 @@ if menu_selection == menu_items[0]:
                 line=dict(color='red', width=2, dash='dash'))
     x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['unique_vehicles']),
-                   text="x value: {}".format(x_value),
+                   text="date: {}".format(x_value),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'unique_vehicles'],
-                   text="y value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'unique_vehicles'])),
+                   text="value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'unique_vehicles'])),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
 
     
@@ -194,10 +194,10 @@ if menu_selection == menu_items[1]:
     
     x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['trips_per_day']),
-                   text="x value: {}".format(x_value),
+                   text="date: {}".format(x_value),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'],
-                   text="y value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'])),
+                   text="value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'trips_per_day'])),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     fig.update_layout(title='Yellow Taxi: Total Trips per Day each Month',
@@ -252,10 +252,10 @@ if menu_selection == menu_items[2]:
     
     x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['farebox_per_day']),
-                   text="x value: {}".format(x_value),
+                   text="date: {}".format(x_value),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'farebox_per_day'],
-                   text="y value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'farebox_per_day'])),
+                   text="value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'farebox_per_day'])),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     fig.update_layout(title='Yellow Taxi: Total Farebox per Day each Month',
@@ -309,10 +309,10 @@ if menu_selection == menu_items[3]:
     
     x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['avg_hours_per_day_per_vehicle']),
-                   text="x value: {}".format(x_value),
+                   text="date: {}".format(x_value),
                    showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle'],
-                   text="y value: {}".format(round(proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle'],1)),
+                   text="value: {}".format(round(proy_Y.loc[proy_Y.index[selected_date_pos], 'avg_hours_per_day_per_vehicle'],1)),
                    showarrow=True, arrowhead=1, ax=50, ay=50)
     
     fig.update_layout(title='Yellow Taxi: Average Hours per Day each Vehicle',
@@ -386,10 +386,10 @@ if menu_selection == menu_items[4]:
 
     x_value = proy_Y.index[selected_date_pos].strftime('%y-%m')
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=max(df[df['license_class']=='Yellow']['monthly_trips_per_vehicle_on_road']),
-                text="x value: {}".format(x_value),
+                text="date: {}".format(x_value),
                 showarrow=True, arrowhead=1, ax=-50, ay=-50)
     fig.add_annotation(x=proy_Y.index[selected_date_pos], y=proy_Y.loc[proy_Y.index[selected_date_pos], 'monthly_trips_per_vehicle_on_road'],
-                text="y value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'monthly_trips_per_vehicle_on_road'])),
+                text="value: {}".format(int(proy_Y.loc[proy_Y.index[selected_date_pos], 'monthly_trips_per_vehicle_on_road'])),
                 showarrow=True, arrowhead=1, ax=50, ay=50)
     fig.update_layout(title='Yellow Taxi: Total Trips per Vehicle each Month',
                     xaxis=dict(title='Month & Year', showgrid=True),

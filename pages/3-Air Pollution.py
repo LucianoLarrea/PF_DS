@@ -222,11 +222,11 @@ kpi_table_html = f"""
       </tr>
         <tr align="center">
           <td>Queens</td>
-        <td>8.9</td>
+        <td>{kpi_vals["kpi_q"]}%</td>
       </tr>
         <tr align="center">
           <td>Staten Island</td>
-        <td>{kpi_vals['kpi_q']}%</td>
+        <td>{kpi_vals['kpi_s']}%</td>
       </tr>
     </table>
   </div>
