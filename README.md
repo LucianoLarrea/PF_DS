@@ -1,52 +1,102 @@
-# PF_DS
-Proyecto Final Data Science
-# <h1 align="center"> Análisis de datos para observar viabilidad de vehículos Eléctricos en el Servicio de Transporte de Pasajeros con Automóviles en la ciudad de New York </h1> 
+# <h1> Análisis de mercado para evaluar la viabilidad de la incorporación de vehículos eléctricos en el servicio de taxis en la ciudad de Nueva York. </h1> 
 ## **HENRY BOOTCAMP | Proyecto Final**
-<hr> en el Área de Manejo y Análisis de Datos
+<hr>
 
-En este proyecto, nuestro equipo se enfocó en entender mejor el cambio en las ofertas de trabajo asociadas al manejo de datos e información, considerando factores culturales y sociales que pudieran influir en la demanda y remuneraciones de estas ofertas.
+# 1. Introducción
 
-Para ello, recopilamos y depuramos información de diferentes fuentes, tanto provistas por la empresa como incorporadas por nosotros, y creamos una base de datos depurada que contempló diferentes tipos de extracción de datos.
+Se lleva a cabo un análisis del sector de transporte público en los taxis amarillos de la ciudad de Nueva York con el fin de evaluar la viabilidad de invertir en tecnologías sostenibles como la implementación de flotas de vehículos eléctricos. Se analizan datos en NYC de los sonidos registrados por el tráfico, la contaminación en el aire, el movimiento de vehículos por zona y los viajes que realizan los taxis en la ciudad para  los 5 Boroughs (distritos) de New York: **Manhattan, Brooklyn, Queens, The Bronx & Staten Island**.Se implementa un modelo de Machine Learning  para estimar tendencias a futuro de los principales indicadores. Se realiza un Dashboard para la visualización de los datos y resultados obtenidos. <br>
 
-A partir de esta base de datos, realizamos un análisis significativo de las líneas de investigación escogidas, contemplando las relaciones entre variables y concluyendo si existía alguna relación entre ellas y los posibles factores que causan dicha relación en la realidad.
+El proyecto se ejecuta bajo metodología ágil Scrum y se desarrolla en cuatro etapas.<br>
+**Etapa 1:** Recopilación de los datos, **Etapa 2:** Creación de base de datos, **Etapa 3:** Análisis Económico, KPIs y **Etapa 4:** Modelo ML. <br>
 
-Además, entrenamos y pusimos en producción un modelo de machine learning de clasificación no supervisado, el cual resolvió un problema y conectó globalmente con los objetivos propuestos en el proyecto.
+La gestión del proyecto se desarrolla en:<br>
+*Actividades [Task:](https://trello.com/b/BBq6OTiJ/proyecto-final) Cronograma [Gant:](https://docs.google.com/spreadsheets/d/10gupD91IRV9KfblHfoy6fAw1rV6vu_gw6LNHp0itnfo/edit#gid=1709744959)*
 
-Algunas de las ideas de análisis e implementación que exploramos incluyen el análisis de tendencias de trabajo en el área de datos, las habilidades y tecnologías más demandadas en el mercado actual, la relación entre habilidades/herramientas y salarios, la conveniencia de trabajar onsite en el país de origen o de manera remota para otro, y la identificación del tipo de profesional más adecuado para cumplir con ciertas funciones y conocimientos tecnológicos.
+<hr>
 
-En resumen, este proyecto nos permitió entender mejor la situación actual del mercado laboral en el área de manejo y análisis de datos, y ofrecer recomendaciones y soluciones a la empresa de Recruiters IT para tomar decisiones informadas y acordes con los cambios que existen a nivel mundial.
+# 2. Objetivos
 
-Además, el equipo presentó un informe detallado de los hallazgos y conclusiones del proyecto, incluyendo visualizaciones y gráficos relevantes para ilustrar los datos y patrones encontrados.
+- Identificar patrones y tendencias en los movimientos de taxis en NYC (2010-2022).<br>
+- Investigar la relación entre el movimiento de los taxis y la calidad del aire y la contaminación sonora en NYC, para determinar alguna  correlación existente. <br>
+- Realizar un análisis de las ganancias económicas del sector. <br>
+- Desarrollar un Modelo de ML para estimar comportamientos futuros del sector de transporte de taxi en NYC.<br>
 
-En cuanto a las habilidades y tecnologías más demandadas, observamos una tendencia en el mercado hacia el uso de herramientas de Big Data, Ciencia de Datos, Inteligencia de Negocio, Machine Learning e Inteligencia Artificial. También encontramos que la demanda de Científicos de Datos y Desarrolladores Big Data está creciendo a una tasa anual del 45%.
+<hr>
 
-En cuanto a la relación entre habilidades/herramientas y salarios, identificamos que ciertas habilidades como el manejo de bases de datos y la programación en lenguajes específicos están asociadas con un mayor salario. Además, descubrimos que la remuneración varía según el país de origen y la ubicación del trabajo.
+# 3. Desarrollo
 
-Finalmente, en cuanto a la identificación del tipo de profesional más adecuado para cumplir con ciertas funciones y conocimientos tecnológicos, concluimos que un Data Scientist es la posición más adecuada para cumplir con las funciones relacionadas con el manejo y análisis de datos.
+<img src="src/esquema.png" />
 
-En conclusión, este proyecto permitió al equipo de Recruiters IT tomar decisiones informadas y estratégicas para abordar las necesidades y demandas del mercado laboral en el área de manejo y análisis de datos, y prepararse para el futuro de la tecnología y la transformación digital.
+## 3.1 Recursos implementados
+
+- **Gestión del proyecto:** Google meet, Trello.<br>
+- **EDA, ETL, SQL BD:** Python, Beautiful Soup, Pandas, Matplotlib,  Seaborn, PySpark, SQLAlchemy , Azure SQL.<br> 
+- **Business Intelligence & Machine Learning:** SQLAlchemy, Plotly, PowerBI, Scikit-learn, Streamlit.<br> 
+- **Cloud:** Azure (Azure Data Factory, Azure Blob Storage, Azure Synapse Analytics) <br>
+
+## 3.2 Obtencción de los Datos
+
+Los datos se extraen de fuentes oficiales que proporciona  New York.  [**Taxi & Limousine Commission**](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) y de los datos abiertos de la ciudad [**Open_Data_NYC**](https://data.cityofnewyork.us/).<br> 
+
+*El **Diccionario de los datos** puede consultarse en [data_dict](https://github.com/francomyburg/Proyecto_grupal_DS).*
+
+<hr>
+
+# 4. ETL/EDA
+
+Se desarrolla un sistema que extrae datos de manera automática de [**Taxi & Limousine Commission**](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) los transforma y los carga por medio de un pipeline a una base de datos SQL en la nube de Azure.<br>
+
+Al realizar el análisis exploratorio de los datos, se determina que:
+
+- La crisis covid-19 afectó las actividades del sector en 2020.
+- El número de viajes en taxis amarillos ha disminuido en un 80% desde el 2013 al presente año (2023).
+- Las zonas donde se produce el mayor número de viajes en taxis son Manhattan y los aeropuertos JFK y LaGuardia. En diciembre de 2022 el sector de taxis amarillos realizó 3,3 millones de viajes, transportó a 4,5 millones de personas y facturó 54,5 millones USD. El borough de Manhattan contribuye con el 76% de dicha facturación.
+- La facturación promedio por día y por vehiculo disminuyó más de 45% desde el 2013 hasta 2023.
+- El borough con la peor calidad de aire, mayor contaminación por ruido y mayor volumen de tráfico vehicular es Manhattan. 
+
+ *Los aspectos más importantes de este proceso se pueden consultar en: [ETL](https://github.com/francomyburg/Proyecto_grupal_DS/tree/main/1.ETL) y el [EDA](https://github.com/francomyburg/Proyecto_grupal_DS/tree/main/2.EDA).*<br>
+
+<hr>
+
+# 5. Resultados
+
+## 5.1 KPIs 
+
+-  Porcentaje de la cantidad de viajes proyectada.<br>
+-  Porcentaje de la cuota del mercado proyectado.<br>
+-  Ingresos brutos por día/mes.<br>
+-  Porcentaje de disminución de contaminante (PM 2,5) en el aire por implementar vehículos eléctricos.<br>
+-  Reducción porcentual de contaminación acústica por implementar vehículos eléctricos. <br>
+
+## 5.2 App
+
+Se generan  métricas e indicadores clave de rendimiento a través de una app desarrollada en Streamlit con un dashboard de PowerBi embebido y un modelo ML de forecasting.
+
+<img src="src/portada_1.gif" />
+
+La proyección generada por el modelo ML indica que el maximo numero de taxis rondará los 9500 para abril del 2024 para decrecer progresivamente.
+
+<hr>
+
+# 6. Conclusiones
 
 
-Descripción del Problema:
-El rápido crecimiento de la tecnología ha permitido a las empresas manejar grandes cantidades de información y datos. El término "Big Data" ha ganado relevancia en los últimos años, y la capacidad de las empresas para almacenar y procesar datos es cada vez más importante para cumplir sus objetivos. Sin embargo, según la Encuesta de Transformación Digital de ANDI en 2019, sólo el 5% de los datos de las empresas son aprovechados, lo que indica la necesidad de acelerar la Transformación Digital y usar herramientas como el Big Data, Ciencia de Datos, Inteligencia de Negocio, Machine Learning e Inteligencia Artificial.
-
-Además, la demanda de trabajadores que se especializan en datos ha aumentado considerablemente. Según el Informe Empleos Emergentes 2020 de LinkedIn, los puestos de Científicos de Datos y Desarrolladores Big Data tendrán un crecimiento anual del 45% en la próxima década. Por lo tanto, una empresa de Recruiters IT ha contratado a un equipo de trabajo para entender mejor los cambios en las ofertas de trabajo relacionadas con el manejo de datos e información y considerar los factores culturales y sociales que puedan afectar la demanda y la remuneración de estas ofertas.
 
 
-### Editar de aqui en adelante
+<hr>
 
-Propuesta de Trabajo:
-El equipo de trabajo recopilará, depurará y disponibilizará la información a través de la creación de una base de datos de diferentes fuentes que incluirá por lo menos dos tipos diferentes de extracción de datos, como datos estáticos, llamados a API y scrapping, entre otros. Luego, el equipo llevará a cabo un reporte y análisis significativos de las líneas de investigación seleccionadas, teniendo en cuenta las relaciones entre variables y los posibles factores que las causan en la realidad.
+*Developed by*
 
-Finalmente, el equipo entrenará y pondrá en producción un modelo de machine learning de clasificación no supervisado para resolver un problema y conectar globalmente con los objetivos propuestos para el proyecto.
+<a href="https://www.linkedin.com/in/franco-jonas-myburg-6095b8255/"><img alt="Franco" title="Connect with Franco" src="https://img.shields.io/badge/Franco Myburg-0077B5?style=flat&logo=Linkedin&logoColor=white"></a> **DATA ENGINEER**
 
-Ideas de Análisis e Implementación:
-Algunas ideas para el análisis e implementación podrían incluir:
+<a href="https://www.linkedin.com/in/ivannagvdc/"><img alt="Ivanna" title="Connect with Ivanna" src="https://img.shields.io/badge/Ivanna Villa-0077B5?style=flat&logo=Linkedin&logoColor=white"></a> **DATA ANALYST**
 
-Job trends: Analizar las habilidades o tecnologías más requeridas en el mercado actual y cómo han evolucionado con el tiempo.
-Skills on demand: Identificar qué habilidades/herramientas coinciden con un mayor salario y si esto varía por país o es consistente.
-Top location: Evaluar si es más conveniente trabajar en el lugar de origen o de manera remota en otro país.
-Web Apps solutions: Determinar si se requiere un Data Scientist, Data Analyst o Data Engineer para cumplir con las necesidades de una empresa que busca contratar a alguien con habilidades y conocimientos específicos en tecnologías de la información.
+<a href="https://www.linkedin.com/in/jospinoponce/"><img alt="Jaime" title="Connect with Jaime" src="https://img.shields.io/badge/Jaime Ospino-0077B5?style=flat&logo=Linkedin&logoColor=white"></a> **DATA ENGINEER**
+
+<a href="https://www.linkedin.com/in/takticflow/"><img alt="Luciano" title="Connect with Luciano" src="https://img.shields.io/badge/Luciano Larrea-0077B5?style=flat&logo=Linkedin&logoColor=white"></a> **PROJECT MANAGER & DATA SCIENTIST**
+
+<a href="https://www.linkedin.com/in/royquillca/"><img alt="Roy" title="Connect with Roy" src="https://img.shields.io/badge/Roy Quillca-0077B5?style=flat&logo=Linkedin&logoColor=white"></a> **DATA ENGINEER**
+
 
 
 
