@@ -34,7 +34,7 @@ if query == options[0]:
 
     .profile a img {
         border-radius: 50%;
-        width: 140px;
+        width: 160px;
     }
     
     .profile-description {
@@ -85,7 +85,8 @@ if query == options[0]:
                  <h4 align="center">Team</h4>
                 <div class="wrapper">
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/franco-jonas-myburg-6095b8255/"><img alt="Franco" title="Connect with Franco" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" >DATA ENGINEER</a>
+                <a href="https://www.linkedin.com/in/franco-jonas-myburg-6095b8255/"><img alt="Franco" title="Connect with Franco" src="pages/Franco.png" >DATA ENGINEER</a>
+                <a href="https://www.linkedin.com/in/franco-jonas-myburg-6095b8255/"> <img src="./pages/Franco.png" alt="Franco" title="Connect with Franco"> DATA ENGINEER </a>
                 </div>
 
                 <div class="profile">
@@ -93,7 +94,7 @@ if query == options[0]:
                 </div>
 
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/jospinoponce/"><img alt="Jaime" title="Connect with Jaime" src="https://media.licdn.com/dms/image/C4E03AQEEQHSU2dliPg/profile-displayphoto-shrink_200_200/0/1535338153237?e=1687996800&v=beta&t=bKlTbOlP8OILR3f67PDsELBrnt7jp2-2hYVxLwdZonA">DATA ENGINEER</a>
+                <a href="https://www.linkedin.com/in/jospinoponce/"><img alt="Jaime" title="Connect with Jaime" src="https://media.licdn.com/dms/image/D4E03AQFeOdXV4jJstA/profile-displayphoto-shrink_800_800/0/1682836288349?e=1688601600&v=beta&t=QCV7qJWXvFIkqHTEHuz7CHhVY-lSvfElf-eHIBzU-eE">DATA ENGINEER</a>
                 </div>
 
                 <div class="profile">
@@ -102,7 +103,7 @@ if query == options[0]:
                 </div>
 
                 <div class="profile">
-                <a href="https://www.linkedin.com/in/royquillca/"><img alt="Roy" title="Connect with Roy" src="https://media.licdn.com/dms/image/D4D35AQGg3Uf7pz53-g/profile-framedphoto-shrink_200_200/0/1657318118230?e=1683129600&v=beta&t=BA2wiW6m6uFX5zvyFB2NbV98ngQ8jfmO7et1LPoJzU4" class="profile-description">DATA ENGINEER</a>
+                <a href="https://www.linkedin.com/in/royquillca/"><img alt="Roy" title="Connect with Roy" src="https://media.licdn.com/dms/image/D4E35AQHQg3nYCccKSA/profile-framedphoto-shrink_800_800/0/1682912414782?e=1683644400&v=beta&t=V2tI9NsN_ExYqXSHIfqvht2mnOdOPyN8DcP1iHP4FxM" class="profile-description">DATA ENGINEER</a>
 
                 </div>
                 </div>
